@@ -19,14 +19,42 @@ public:
         //}
         //return max_so_far;
     //}
-    
+
     // divide and conquer
     int maxSubArray(int A[], int n) {
-
+        return maxSubArray(A, 0, n-1);
     }
 
-    int maxSubArray(int A[], int idx_st, int idx_end, int& maxVal) {
-        
+    int maxSubArray(int A[], int left, int right) {
+        if (left > right) {
+            return INT_MIN;
+        }
+        if(left == right) {
+            return A[left];
+        }
+        int mid = left + (right - left)/2;
+        int max_left = maxSubArray(A, left, mid);
+        int max_right = maxSubArray(A, mid+1, right);
+
+        int max_left_bd = INT_MIN;
+        int sum_left_bd = 0;
+        for(int i= mid; i >=left; i--) {
+            sum_left_bd += A[i];
+            if (sum_left_bd > max_left_bd) {
+                max_left_bd = sum_left_bd;
+            }
+        }
+
+        int max_right_bd = INT_MIN;
+        int sum_right_bd = 0;
+        for (int j = mid + 1; j <=right; j++) {
+            sum_right_bd += A[j];
+            if (sum_right_bd > max_right_bd) {
+                max_right_bd = sum_right_bd;
+            }
+        }
+        int max_bd = max_left_bd + max_right_bd;
+        return (max_left > max_right)? ((max_left > max_bd)? max_left: max_bd):((max_right > max_bd)? max_right: max_bd);
     }
 };
 

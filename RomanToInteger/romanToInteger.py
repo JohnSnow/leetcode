@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-import re
-
 ROMAN_REG = """
     ^                   # begging of string
     (M{0,3})              # thousands - 0 to 3 M's
@@ -16,52 +14,48 @@ ROMAN_REG = """
 
     """
 
-MAP={
-        "MMM"   : 3000,
-        "MM"    : 2000,
+
+class Solution:
+
+    MAP={
         "M"     : 1000,
         "CM"    : 900,
         "CD"    : 400,
-        "DCCC"  : 800,
-        "DCC"   : 700,
-        "DC"    : 600,
         "D"     : 500,
-        "CCC"   : 300,
-        "CC"    : 200,
         "C"     : 100,
         "XC"    : 90,
         "XL"    : 40,
-        "LXXX"  : 80,
-        "LXX"   : 70,
-        "LX"    : 60,
         "L"     : 50,
-        "XXX"   : 30,
-        "XX"    : 20,
         "X"     : 10,
         "IX"    : 9,
         "IV"    : 4,
         "V"     : 5,
-        "VIII"  : 8,
-        "VII"   : 7,
-        "VI"    : 6,
-        "III"   : 3,
-        "II"    : 2,
         "I"     : 1
     }
 
-class Solution:
-
+    LL = ['M', 'CM', 'CD', 'D', 'C', 'XC', 'XL', 'L', 'X', 'IX', 'IV', 'V', 'I']
     # @return an integer
     def romanToInt(self, s):
         if not s:
             return 0
 
         integer = 0
-        m = re.search(ROMAN_REG, s, re.X)
+        length = len(s)
+        i = 0
+        done = False
+        for RO in self.LL:
+            if len(RO) == 1:
+                cnt = 0
+                while i < length and s[i] == RO and cnt < 4:
+                    cnt += 1
+                    i += 1
+                integer += cnt * self.MAP[RO]
+            elif s[i:i+2] == RO:
+                i += 2
+                integer += self.MAP[RO]
 
-        for mm in m.groups():
-            if mm:
-                integer += MAP[mm]
+            if i == length:
+                break
 
         return integer
 

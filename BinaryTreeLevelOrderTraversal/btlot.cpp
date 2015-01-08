@@ -34,7 +34,7 @@ public:
             i++;
         }
 
-        for(vector<vector<TreeNode *> >::const_reverse_iterator it=tmp.rbegin(); it != tmp.rend(); it++)
+        for(vector<vector<TreeNode *> >::const_iterator it=tmp.begin(); it != tmp.end(); it++)
         {
             vector<int> curr;
             for(vector<TreeNode*>::const_iterator it1 = (*it).begin(); it1 != (*it).end(); it1++) {
@@ -45,3 +45,4 @@ public:
         return retVector;
     }
 };
+

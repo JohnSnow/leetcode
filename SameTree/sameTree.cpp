@@ -45,6 +45,4 @@ public:
         postOrder(root->right, vec);
         vec.push_back(root->val);
     }
-
-
 };
